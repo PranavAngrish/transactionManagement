@@ -13,9 +13,7 @@ A RESTful API for managing user accounts, payments, and transactions with multi-
 - [Testing](#testing)
 - [Docker Deployment](#docker-deployment)
 - [Configuration](#configuration)
-- [Error Handling](#error-handling)
-- [Limitations](#limitations)
-- [Contributing](#contributing)
+
 
 ## Features
 
