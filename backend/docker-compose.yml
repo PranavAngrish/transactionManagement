@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  payment-api:
+    build: .
+    container_name: payment-api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - SALT_ROUNDS=10
+      - BASE_CURRENCY=INR
+      - EXCHANGE_API_URL=https://open.er-api.com/v6/latest/INR
+      - EXCHANGE_CACHE_DURATION=3600000
+    restart: unless-stopped
+    # Optional: mount a volume for logs
+    volumes:
+      - ./logs:/app/logs
