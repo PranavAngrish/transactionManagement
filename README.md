@@ -518,24 +518,3 @@ curl -X GET "http://localhost:3000/api/payments/bal?currency=USD" \
 curl -X GET http://localhost:3000/api/payments/stmt \
   -H "Authorization: Basic $(echo -n 'alice:alice123' | base64)"
 ```
-
-## Troubleshooting
-
-### Server won't start
-
-**Issue:** Port already in use
-```bash
-Error: listen EADDRINUSE: address already in use :::3000
-```
-
-**Solution:**
-```bash
-# Find process using port 3000
-lsof -i :3000
-
-# Kill the process
-kill -9 <PID>
-
-# Or use a different port
-PORT=3001 npm start
-```
