@@ -112,7 +112,6 @@ PORT=3000
 SALT_ROUNDS=10
 BASE_CURRENCY=INR
 EXCHANGE_API_URL=https://open.er-api.com/v6/latest/INR
-EXCHANGE_CACHE_DURATION=3600000
 ```
 
 4. **Start the server:**
@@ -360,12 +359,6 @@ This API uses **HTTP Basic Authentication**.
    Authorization: Basic YWxpY2U6YWxpY2UxMjM=
    ```
 
-### Security Notes
-
-- Passwords are hashed using bcrypt with configurable salt rounds
-- Always use HTTPS in production
-- Basic Auth credentials are NOT encrypted (use HTTPS)
-- Tokens do not expire (consider implementing JWT for production)
 
 ## Testing
 
@@ -386,7 +379,6 @@ npm run test:coverage
 
 - **Unit Tests:** Services (userService, paymentService, currencyService)
 - **Integration Tests:** Full API endpoints with authentication
-- **Coverage:** ~95% code coverage
 
 ### Test Structure
 
@@ -450,18 +442,7 @@ environment:
 | `SALT_ROUNDS` | Bcrypt salt rounds | `10` |
 | `BASE_CURRENCY` | Base currency code | `INR` |
 | `EXCHANGE_API_URL` | Currency API endpoint | `https://open.er-api.com/v6/latest/INR` |
-| `EXCHANGE_CACHE_DURATION` | Cache duration (ms) | `3600000` (1 hour) |
 
-### Supported Currencies
-
-The API supports all currencies provided by the Open Exchange Rates API:
-- USD (US Dollar)
-- EUR (Euro)
-- GBP (British Pound)
-- JPY (Japanese Yen)
-- CAD (Canadian Dollar)
-- AUD (Australian Dollar)
-- And many more...
 
 ## Error Handling
 
@@ -507,33 +488,6 @@ The API supports all currencies provided by the Open Exchange Rates API:
 { "error": "Recipient does not exist" }
 { "error": "Unsupported Currency" }
 ```
-
-## Limitations
-
-### ⚠️ Important: Not Production Ready
-
-This application uses **in-memory storage** for demonstration purposes. This means:
-
-1. **Data Loss:** All data is lost when the server restarts
-2. **No Persistence:** Users, balances, and transactions are not saved
-3. **Single Instance:** Cannot scale horizontally
-4. **No Concurrency Safety:** Race conditions possible with simultaneous requests
-5. **No Transaction Atomicity:** Payment operations are not atomic
-
-### Production Requirements
-
-For production deployment, you must implement:
-
-- **Database:** PostgreSQL, MongoDB, or MySQL
-- **Transaction Management:** ACID compliance for payments
-- **Session Management:** JWT tokens or session store
-- **Rate Limiting:** Prevent API abuse
-- **Logging:** Structured logging (Winston, Bunyan)
-- **Monitoring:** Application performance monitoring
-- **HTTPS:** SSL/TLS encryption
-- **Input Validation:** More robust validation (express-validator)
-- **Currency Cache:** Redis for exchange rate caching
-- **Error Tracking:** Sentry or similar service
 
 ## API Usage Examples
 
@@ -590,55 +544,3 @@ kill -9 <PID>
 # Or use a different port
 PORT=3001 npm start
 ```
-
-### Authentication fails
-
-**Issue:** 401 Unauthorized
-
-**Solution:**
-- Verify username and password are correct
-- Ensure user is registered first
-- Check Authorization header format: `Basic <base64-encoded-credentials>`
-- Verify base64 encoding is correct
-
-### Currency conversion fails
-
-**Issue:** Currency conversion error
-
-**Solution:**
-- Check internet connection
-- Verify EXCHANGE_API_URL is accessible
-- Check if currency code is supported
-- API might be rate-limited (free tier has limits)
-
-## Contributing
-
-### Development Setup
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make changes and add tests
-4. Run tests: `npm test`
-5. Commit changes: `git commit -m 'Add feature'`
-6. Push to branch: `git push origin feature-name`
-7. Submit a pull request
-
-### Code Style
-
-- Use ES6+ features
-- Follow existing code structure
-- Add JSDoc comments for functions
-- Write tests for new features
-- Keep functions small and focused
-
-## License
-
-ISC
-
-## Support
-
-For issues, questions, or contributions, please open an issue on GitHub.
-
----
-
-**Note:** This is a demonstration project. Do not use in production without implementing proper database storage, security measures, and production-ready features.
