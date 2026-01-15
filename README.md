@@ -97,7 +97,7 @@ payment_api/
 
 1. **Clone the repository:**
 ```bash
-git clone <repository-url>
+git clone git@github.com:PranavAngrish/transactionManagement.git
 cd payment-api
 ```
 
@@ -121,11 +121,6 @@ npm run dev
 
 # Production mode
 npm start
-```
-
-5. **Verify server is running:**
-```bash
-curl http://localhost:3000/api/test
 ```
 
 ## API Documentation
